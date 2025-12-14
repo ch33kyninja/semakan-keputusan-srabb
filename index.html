@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Semakan Keputusan Murid</title>
+</head>
+<body>
+
+<h2>Semakan Keputusan Ujian</h2>
+
+<input type="text" id="nama" placeholder="Masukkan Nama Penuh">
+<button onclick="semak()">Hantar</button>
+
+<div id="keputusan"></div>
+
+<script>
+function semak() {
+  let nama = document.getElementById("nama").value;
+  
+  fetch("URL_WEB_APP_ANDA?nama=" + nama)
+    .then(res => res.json())
+    .then(data => {
+      if (data == "Tiada Rekod") {
+        document.getElementById("keputusan").innerHTML = "Tiada Rekod Dijumpai";
+      } else {
+        document.getElementById("keputusan").innerHTML = `
+          <h3>Keputusan Murid</h3>
+          Nama: ${data[0]} <br>
+          Kelas: ${data[1]} <br>
+          BM: ${data[2]} <br>
+          BI: ${data[3]} <br>
+          Math: ${data[4]} <br>
+          Sains: ${data[5]} <br>
+          <br>
+          <button onclick="window.print()">Print / Download PDF</button>
+        `;
+      }
+    });
+}
+</script>
+
+</body>
+</html>
